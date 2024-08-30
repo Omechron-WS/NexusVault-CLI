@@ -45,7 +45,10 @@ public final class Png2Tex implements Converter {
 	@Override
 	public void convert(ConversionManager manager) throws IOException {
 		final var resource = manager.getResource();
-		final var baseImage = loadImage(resource);
+		var baseImage = loadImage(resource);
+                if(depth > 1) {
+                    baseImage = baseImage.make3DImageFromSideways(depth);
+                }
 
 		final var binaryData = TextureWriter.toBinary(this.target, baseImage, this.mipmapCount, this.quality, this.defaultColors);
 
